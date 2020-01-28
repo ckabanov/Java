@@ -1,28 +1,59 @@
-package Animal;
+package Cat;
 
-import java.util.Random;
 
-public class main {
+class Plate {
+    private int food;
+    public Plate(int food) {
+        this.food = food;
 
-    public static int getRandomNumber(int n) {
-        int x = (int) (Math.random() * n);
-        return x;
     }
+    boolean decreaseFood(int n) {
+        int negativePlate = food-n;
+        if (negativePlate<0) return false;
+        food -= n;
+        return true;
 
+    }
+    public void info() {
+        System.out.println("plate: " + food);
+    }
+    void addFood(int food) {
+        this.food += food;
+    }
+}
+class Cat {
+    private boolean full;
+    private String name;
+    private int appetite;
+    public Cat(String name, int appetite) {
+        this.name = name;
+        this.appetite = appetite;
+        this.full = true;
+    }
+    public void eat(Plate p) {
+        if (full && p.decreaseFood(appetite)) full =false;
+    }
+    public void info (){
+        String isHungry = !full ? "сыт" : "голоден";
+        System.out.println(name + ": " + isHungry);
+    }
+}
+public class Main {
     public static void main(String[] args) {
-        Dog[] dogs = new Dog[5];
-        Cat[] cats = new Cat[5];
-        String[] names = {"Барсик", "Вася", "Шарик", "Найда", "Киса"};
-        for (int i = 0; i < cats.length; i++) {
-            cats[i] = new Cat(names[getRandomNumber(5)], getRandomNumber(1000), getRandomNumber(3));
-            dogs[i] = new Dog(names[getRandomNumber(5)], getRandomNumber(1000), getRandomNumber(1000), getRandomNumber(3));
-        }
 
-        for (int i = 0; i < 5; i++) {
-             if (cats[i].distanceRun <= cats[i].maxDistanceRun|| cats[i].height <= cats[i].maxHeight)
-                System.out.println(cats[i].animalCat + cats[i].name + " пробежал " + cats[i].distanceRun  + " м, подбрыгнул на "+ cats[i].height + " м" );
-            if (dogs[i].distanceRun <= dogs[i].maxDistanceRun|| dogs[i].height <= dogs[i].maxHeight)
-                System.out.println(dogs[i].animalDog + dogs[i].name + " пробежал " + dogs[i].distanceRun  + " м, подбрыгнул на "+ dogs[i].height + " м и проплыл "+ dogs[i].distanceSwim );
+        Cat[]Cats = new Cat [5];
+        Cats [0] = new Cat("Barsik", 10);
+        Cats [1] = new Cat("Vasia", 15);
+        Cats [2] = new Cat("Marusia", 20);
+        Cats [3] = new Cat("Timosha", 25);
+        Cats [4] = new Cat("Kolyan", 30);
+        Plate plate = new Plate(60);
+        for (Cat Cat: Cats) {
+            plate.info();
+            Cat.eat(plate);
+            Cat.info();
+            System.out.println();
         }
     }
+
 }
